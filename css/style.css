@@ -17,6 +17,11 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+body.fonts-loaded {
+  opacity: 1;
 }
 
 #about {
@@ -1509,14 +1514,6 @@ img.is-loaded {
   opacity: 1;
 }
 
-body {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-body.fonts-loaded {
-  opacity: 1;
-}
-
 .header__logo-img,
 .about__desc-img,
 .about__card-icon,
@@ -1579,6 +1576,58 @@ body.fonts-loaded {
   visibility: visible;
 }
 
+.reveal-y,
+.reveal-x {
+  --reveal-duration: 700ms;
+  --reveal-easing: cubic-bezier(0.23, 1, 0.32, 1);
+  --reveal-distance-y: 30px;
+  --reveal-distance-x: 40px;
+  opacity: 0;
+  will-change: opacity, translate;
+}
+
+.reveal-y {
+  translate: 0 var(--reveal-distance-y);
+}
+
+.reveal-x {
+  translate: calc(-1 * var(--reveal-distance-x)) 0;
+}
+
+.reveal-x.reveal-from-right {
+  translate: var(--reveal-distance-x) 0;
+}
+
+.reveal-y.is-visible {
+  animation: reveal-y var(--reveal-duration) var(--reveal-easing) both;
+}
+
+.reveal-x.is-visible {
+  animation: reveal-x var(--reveal-duration) var(--reveal-easing) both;
+}
+
+.reveal-x.reveal-from-right.is-visible {
+  animation-name: reveal-x-right;
+}
+
+@keyframes reveal-y {
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes reveal-x {
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes reveal-x-right {
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
 @media (max-width: 1279px) {
   header .header__container {
     place-items: center;
@@ -1734,6 +1783,10 @@ body.fonts-loaded {
     width: 42px;
     height: 42px;
   }
+  .reveal-y.is-visible,
+  .reveal-x.is-visible {
+    animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
 }
 @media (max-width: 1023px) {
   .popup .popup__inner .popup__content {
@@ -1757,6 +1810,16 @@ body.fonts-loaded {
   }
 }
 @media (max-width: 743px) {
+  .hero .hero__container .hero__title.reveal-x,
+  .hero .hero__container .hero__subtitle.reveal-x,
+  .hero .hero__container .hero__button.reveal-x {
+    translate: 0 var(--reveal-distance-y);
+  }
+  .hero .hero__container .hero__title.reveal-x.is-visible,
+  .hero .hero__container .hero__subtitle.reveal-x.is-visible,
+  .hero .hero__container .hero__button.reveal-x.is-visible {
+    animation-name: reveal-y;
+  }
   header .header__container .header__actions .header__contact-btn {
     display: none;
   }
@@ -3118,7 +3181,6 @@ body.fonts-loaded {
   }
   .faq .faq__container .faq__title {
     font-size: 30px;
-    text-align: center;
   }
   .faq .faq__container .faq__inner .faq__content .faq__accordion {
     gap: 13px;
@@ -4611,6 +4673,15 @@ body.fonts-loaded {
 @media (prefers-reduced-motion: reduce) {
   .popup[open],
   .popup[open]::backdrop {
+    animation: none;
+  }
+  .reveal-y,
+  .reveal-x,
+  .reveal-y.is-visible,
+  .reveal-x.is-visible,
+  .reveal-x.reveal-from-right.is-visible {
+    opacity: 1;
+    translate: none;
     animation: none;
   }
 }
