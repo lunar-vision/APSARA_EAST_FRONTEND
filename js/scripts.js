@@ -206,7 +206,7 @@ const revealConfig = {
   rootMargin: "0px 0px 60px 0px",
   delayAttribute: "delay",
   mobileDelayAttribute: "delayMobile",
-  mobileMedia: "(max-width: 1279px)",
+  mobileMedia: "(max-width: 743px)",
   delayStep: 100,
   mobileOffset: 1,
   reducedMotion: "(prefers-reduced-motion: reduce)",
